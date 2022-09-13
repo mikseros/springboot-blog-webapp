@@ -9,4 +9,6 @@ import com.mikseros.springboot.dto.PostDto;
 public interface PostService {
 
 	List<PostDto> findAllPosts();
+	
+	void createPost(PostDto postDto);
 }
