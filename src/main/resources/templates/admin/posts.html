@@ -28,11 +28,13 @@
 					<td th:text="${post.createdOn}">created on</td>
 					<td>
 						<a th:href="@{/admin/posts/{postId}/edit(postId=${post.id})}" class="btn btn-primary"> Edit</a>
+						<a th:href="@{/admin/posts/{postId}/delete(postId=${post.id})}" class="btn btn-danger"> Delete</a>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
+	<br /> <br /> <br /> <br /> <br />
 	<div th:replace="admin/footer :: footer"></div>
 </body>
 </html>

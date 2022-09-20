@@ -79,6 +79,13 @@ public class PostController {
 		return "redirect:/admin/posts";
 	}
 	
+	// handler method to handle delete post request
+	@GetMapping("/admin/posts/{postId}/delete")
+	public String deletePost(@PathVariable("postId") Long postId) {
+		postService.deletePost(postId);
+		return "redirect:/admin/posts";
+	}
+	
 	
 	private static String getUrl(String postTitle) {
 		// OOPS Concepts Explained in Java
