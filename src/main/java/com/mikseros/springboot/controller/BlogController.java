@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mikseros.springboot.dto.PostDto;
 import com.mikseros.springboot.service.PostService;
@@ -34,6 +35,16 @@ public class BlogController {
 		PostDto post = postService.findPostByUrl(postUrl);
 		model.addAttribute("post", post);
 		return "blog/blog_post";
+	}
+	
+	// handler method to handle blog post search request
+	// http://localhost:8080/page/search?query=java
+	@GetMapping("/page/search")
+	public String searchPost(@RequestParam(value = "query") String query,
+							 Model model) {
+		List<PostDto> postsResponse = postService.searchPosts(query);
+		model.addAttribute("postsResponse", postsResponse);
+		return "blog/view_posts";
 	}
 	
 }
