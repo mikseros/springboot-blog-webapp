@@ -1,5 +1,8 @@
 package com.mikseros.springboot.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import com.mikseros.springboot.dto.CommentDto;
@@ -28,6 +31,14 @@ public class CommentServiceImpl implements CommentService {
 		Comment comment = CommentMapper.mapToComment(commentDto);
 		comment.setPost(post);
 		commentRepository.save(comment);
+	}
+
+	@Override
+	public List<CommentDto> findAllComments() {
+		List<Comment> comments = commentRepository.findAll();
+		return comments.stream()
+					.map(CommentMapper::mapToCommentDto)
+					.collect(Collectors.toList());
 	}
 
 }

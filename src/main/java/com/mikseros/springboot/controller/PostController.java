@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mikseros.springboot.dto.CommentDto;
 import com.mikseros.springboot.dto.PostDto;
+import com.mikseros.springboot.service.CommentService;
 import com.mikseros.springboot.service.PostService;
 
 import jakarta.validation.Valid;
@@ -20,9 +22,11 @@ import jakarta.validation.Valid;
 public class PostController {
 	
 	private PostService postService;
+	private CommentService commentService;
 
-	public PostController(PostService postService) {
+	public PostController(PostService postService, CommentService commentService) {
 		this.postService = postService;
+		this.commentService = commentService;
 	}
 	
 	// Handler method, GET request & return Model & View
@@ -31,6 +35,14 @@ public class PostController {
 		List<PostDto> posts = postService.findAllPosts();
 		model.addAttribute("posts", posts);
 		return "/admin/posts";
+	}
+	
+	// handler method to handle list comments request
+	@GetMapping("/admin/posts/comments")
+	public String postComments(Model model) {
+		List<CommentDto> comments = commentService.findAllComments();
+		model.addAttribute("comments", comments);
+		return "admin/comments";
 	}
 	
 	// Handler method to handle new post request
