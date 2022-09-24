@@ -2,6 +2,7 @@
 package com.mikseros.springboot.dto;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -24,4 +25,5 @@ public class PostDto {
 	private String shortDescription;
 	private LocalDateTime createdOn;
 	private LocalDateTime updatedOn;
+	private Set<CommentDto> comments;
 }
