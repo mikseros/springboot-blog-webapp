@@ -37,6 +37,10 @@
 											   th:field="*{name}"
 											   type="text"
 										/>
+										<p th:if="${#fields.hasErrors('name')}"
+										   th:errors="*{name}"
+										   class="text-danger"
+										></p>
 									</div>
 								</div>
 								
@@ -49,6 +53,10 @@
 											   th:field="*{email}"
 											   type="text"
 										/>
+										<p th:if="${#fields.hasErrors('email')}"
+										   th:errors="*{email}"
+										   class="text-danger"
+										></p>
 									</div>
 								</div>
 								
@@ -63,6 +71,10 @@
 											th:field="*{content}"
 										>
 										</textarea>
+										<p th:if="${#fields.hasErrors('content')}"
+										   th:errors="*{content}"
+										   class="text-danger"
+										></p>
 									</div>
 								</div>
 								<div class="row">
