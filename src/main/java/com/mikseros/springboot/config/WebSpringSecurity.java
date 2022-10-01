@@ -12,10 +12,11 @@ public class WebSpringSecurity {
 	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.cors().disable()
+		http.csrf().disable()
 				.authorizeRequests()
-				.anyRequest()
-				.authenticated()
+				.antMatchers("/resources/**").permitAll()
+				.antMatchers("/register/**").permitAll()
+				.antMatchers("/admin/**").hasAnyRole("ADMIN", "GUEST")
 				.and()
 				.formLogin(form -> form
 						.loginPage("/login")

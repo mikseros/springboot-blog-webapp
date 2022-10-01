@@ -22,7 +22,7 @@ public class AuthController {
 		this.userService = userService;
 	}
 	
-	// handler method to handlelogin page request
+	// handler method to handle login page request
 	@GetMapping("/login")
 	public String loginPage() {
 		return "login";
