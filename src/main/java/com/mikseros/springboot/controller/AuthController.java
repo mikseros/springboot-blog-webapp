@@ -21,6 +21,12 @@ public class AuthController {
 	public AuthController(UserService userService) {
 		this.userService = userService;
 	}
+	
+	// handler method to handlelogin page request
+	@GetMapping("/login")
+	public String loginPage() {
+		return "login";
+	}
 
 	// handler method to handle user registration request
 	@GetMapping("/register")
