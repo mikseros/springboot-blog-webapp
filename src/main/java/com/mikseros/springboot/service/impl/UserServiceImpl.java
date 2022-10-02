@@ -3,6 +3,7 @@ package com.mikseros.springboot.service.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.mikseros.springboot.dto.RegistrationDto;
@@ -17,10 +18,12 @@ public class UserServiceImpl implements UserService {
 
 	private UserRepository userRepository;
 	private RoleRepository roleRepository;
+	private PasswordEncoder passwordEncoder;
 	
-	public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+	public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	@Override
@@ -29,7 +32,7 @@ public class UserServiceImpl implements UserService {
 		user.setName(registrationDto.getFirstName() + " " + registrationDto.getLastName());
 		user.setEmail(registrationDto.getEmail());
 		// use spring security to encrypt the password
-		user.setPassword(registrationDto.getPassword());
+		user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
 		Role role = roleRepository.findByName("ROLE_GUEST");
 		user.setRoles(Arrays.asList(role));
 		userRepository.save(user);
