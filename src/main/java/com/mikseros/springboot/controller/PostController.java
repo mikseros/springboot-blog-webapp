@@ -32,7 +32,7 @@ public class PostController {
 	// Handler method, GET request & return Model & View
 	@GetMapping("/admin/posts")
 	public String posts(Model model) {
-		List<PostDto> posts = postService.findAllPosts();
+		List<PostDto> posts = postService.findPostByUser();
 		model.addAttribute("posts", posts);
 		return "/admin/posts";
 	}
