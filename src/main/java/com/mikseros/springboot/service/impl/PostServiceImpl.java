@@ -9,17 +9,22 @@ import org.springframework.stereotype.Service;
 
 import com.mikseros.springboot.dto.PostDto;
 import com.mikseros.springboot.entity.Post;
+import com.mikseros.springboot.entity.User;
 import com.mikseros.springboot.mapper.PostMapper;
 import com.mikseros.springboot.repository.PostRepository;
+import com.mikseros.springboot.repository.UserRepository;
 import com.mikseros.springboot.service.PostService;
+import com.mikseros.springboot.util.SecurityUtils;
 
 @Service
 public class PostServiceImpl implements PostService {
 
 	private PostRepository postRepository;
+	private UserRepository userRepository;
 	
-	public PostServiceImpl(PostRepository postRepository) {
+	public PostServiceImpl(PostRepository postRepository, UserRepository userRepository) {
 		this.postRepository = postRepository;
+		this.userRepository = userRepository;
 	}
 
 	@Override
@@ -33,7 +38,10 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public void createPost(PostDto postDto) {
+		String email = SecurityUtils.getCurrentUser().getUsername();
+		User user = userRepository.findByEmail(email);
 		Post post = PostMapper.mapToPost(postDto);
+		post.setCreatedBy(user);
 		postRepository.save(post);
 	}
 
