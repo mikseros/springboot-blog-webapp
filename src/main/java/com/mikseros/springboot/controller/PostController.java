@@ -15,6 +15,8 @@ import com.mikseros.springboot.dto.CommentDto;
 import com.mikseros.springboot.dto.PostDto;
 import com.mikseros.springboot.service.CommentService;
 import com.mikseros.springboot.service.PostService;
+import com.mikseros.springboot.util.ROLE;
+import com.mikseros.springboot.util.SecurityUtils;
 
 import jakarta.validation.Valid;
 
@@ -32,7 +34,13 @@ public class PostController {
 	// Handler method, GET request & return Model & View
 	@GetMapping("/admin/posts")
 	public String posts(Model model) {
-		List<PostDto> posts = postService.findPostByUser();
+		String role = SecurityUtils.getRole();
+		List<PostDto> posts = null;
+		if(ROLE.ROLE_ADMIN.name().equals(role)) {
+			posts = postService.findAllPosts();
+		} else {
+			posts = postService.findPostByUser();
+		}
 		model.addAttribute("posts", posts);
 		return "/admin/posts";
 	}
@@ -40,7 +48,13 @@ public class PostController {
 	// handler method to handle list comments request
 	@GetMapping("/admin/posts/comments")
 	public String postComments(Model model) {
-		List<CommentDto> comments = commentService.findCommentsByPost();
+		String role = SecurityUtils.getRole();
+		List<CommentDto> comments = null;
+		if(ROLE.ROLE_ADMIN.name().equals(role)) {
+			comments = commentService.findAllComments();
+		} else {
+			comments = commentService.findCommentsByPost();
+		}
 		model.addAttribute("comments", comments);
 		return "admin/comments";
 	}
